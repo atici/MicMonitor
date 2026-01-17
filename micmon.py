@@ -40,12 +40,12 @@ class AudioNoiseGate:
         rms = np.sqrt(np.mean(np.square(audio)))
 
         # Gate logic
-        target_gain = (
-            1.0
-            if rms > self.threshold_amplitude
-            else np.maximum((rms / self.threshold_amplitude) ** self.inv_ratio, 0.01)
-        )
-
+        # target_gain = (
+        #     1.0
+        #     if rms > self.threshold_amplitude
+        #     else np.maximum((rms / self.threshold_amplitude) ** self.inv_ratio, 0.001)
+        # )
+        target_gain = 1.0 if rms > self.threshold_amplitude else 0.0
         # Smooth envelope
         coef = (
             self.attack_coef if target_gain > self.current_gain else self.release_coef
@@ -95,20 +95,19 @@ if __name__ == "__main__":
     PRESETS = {
         "ultra": {
             "block_size": 32,
-            "threshold": -25,
+            "threshold": -35,
             "desc": "Ultra-low (~0.67ms) - May be unstable",
         },
         "minimum": {
             "block_size": 64,
-            "threshold": -25,
+            "threshold": -35,
             "desc": "Minimum latency (~1.3ms)",
         },
         "balanced": {
             "block_size": 128,
-            "threshold": -25,
+            "threshold": -35,
             "desc": "Balanced (~2.7ms) - Recommended",
         },
-        "stable": {"block_size": 256, "threshold": -25, "desc": "Stable (~5.3ms)"},
     }
 
     # Default values
