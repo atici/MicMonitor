@@ -20,7 +20,7 @@ git clone https://github.com/atici/MicMonitor.git
 cd MicMonitor
 
 # Install dependencies
-pip install sounddevice numpy
+pip install -r requirements.txt
 ```
 
 ## Usage
